@@ -7,8 +7,7 @@ import com.govind.todoz.R
 import com.govind.todoz.adapter.TodoAdapter
 import com.govind.todoz.databinding.FragmentHomeBinding
 import com.govind.todoz.entities.Todo
-import java.util.*
-import kotlin.collections.ArrayList
+import com.govind.todoz.utils.DummyDataEngine
 
 class HomeFragment : BaseFragment(),DateItemClickListener, TodoAdapter.TodoListener{
 
@@ -30,7 +29,7 @@ class HomeFragment : BaseFragment(),DateItemClickListener, TodoAdapter.TodoListe
     }
 
     private fun loadData() {
-        todoAdapter.addItems(getDummyTodos())
+        todoAdapter.addItems(DummyDataEngine.getDummyTodos())
     }
 
     private fun initView() {
@@ -44,12 +43,5 @@ class HomeFragment : BaseFragment(),DateItemClickListener, TodoAdapter.TodoListe
 
     override fun onTodoSelected(selectedTodo: Todo?) {
         showToast(selectedTodo?.title)
-    }
-
-    fun getDummyTodos() : MutableList<Todo>{
-        var todos: MutableList<Todo> = ArrayList()
-        todos.add(Todo(1,"Grocory", "Handwash, Facewash", "02-07-2021",false))
-        todos.add(Todo(2,"Stock Watchlist", "Infosys, Wipro, CDSL, Lauras lab","02-07-2021", false))
-        return todos
     }
 }
