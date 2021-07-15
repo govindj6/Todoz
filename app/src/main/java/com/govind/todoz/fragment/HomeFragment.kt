@@ -9,7 +9,10 @@ import com.govind.todoz.databinding.FragmentHomeBinding
 import com.govind.todoz.entities.Todo
 import com.govind.todoz.utils.DummyDataEngine
 
-class HomeFragment : BaseFragment(),DateItemClickListener, TodoAdapter.TodoListener{
+class HomeFragment : BaseFragment(), DateItemClickListener, TodoAdapter.TodoListener {
+
+    var total = 0
+    var productCount = 6
 
     private lateinit var binding: FragmentHomeBinding
     private lateinit var todoAdapter: TodoAdapter
@@ -35,6 +38,7 @@ class HomeFragment : BaseFragment(),DateItemClickListener, TodoAdapter.TodoListe
     private fun initView() {
         todoAdapter = TodoAdapter(ArrayList(), this)
         binding.evTodo.adapter = todoAdapter;
+        binding.btnAddTodo.setOnClickListener { callback?.onAddTodoRequested() }
     }
 
     override fun onDateClick(date: String) {
