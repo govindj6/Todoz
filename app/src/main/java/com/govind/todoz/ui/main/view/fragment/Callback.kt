@@ -1,4 +1,4 @@
-package com.govind.todoz.fragment
+package com.govind.todoz.ui.main.view.fragment
 
 interface Callback {
     fun showHomeScreen()

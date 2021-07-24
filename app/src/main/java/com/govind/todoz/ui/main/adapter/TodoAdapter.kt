@@ -1,12 +1,12 @@
-package com.govind.todoz.adapter
+package com.govind.todoz.ui.main.adapter
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.govind.todoz.R
+import com.govind.todoz.data.modal.Todo
 import com.govind.todoz.databinding.ItemTodoBinding
-import com.govind.todoz.entities.Todo
 
 class TodoAdapter(var todoList: MutableList<Todo>, var listener: TodoListener) :
     RecyclerView.Adapter<TodoAdapter.ViewHolder>() {

@@ -1,18 +1,16 @@
-package com.govind.todoz.fragment
+package com.govind.todoz.ui.main.view.fragment
 
 import android.os.Bundle
 import android.view.View
+import androidx.fragment.app.Fragment
 import com.example.horizontalcalendar.DateItemClickListener
 import com.govind.todoz.R
-import com.govind.todoz.adapter.TodoAdapter
+import com.govind.todoz.data.modal.Todo
 import com.govind.todoz.databinding.FragmentHomeBinding
-import com.govind.todoz.entities.Todo
+import com.govind.todoz.ui.main.adapter.TodoAdapter
 import com.govind.todoz.utils.DummyDataEngine
 
 class HomeFragment : BaseFragment(), DateItemClickListener, TodoAdapter.TodoListener {
-
-    var total = 0
-    var productCount = 6
 
     private lateinit var binding: FragmentHomeBinding
     private lateinit var todoAdapter: TodoAdapter
@@ -28,11 +26,38 @@ class HomeFragment : BaseFragment(), DateItemClickListener, TodoAdapter.TodoList
         super.onViewCreated(view, savedInstanceState)
         binding.calendar.initialize(this)
         initView()
+    }
+
+    override fun refreshFragment() {
+        super.refreshFragment()
+        val dummy = DummyDataEngine()
+        dummy.addDummyItems()
+        showToast("called")
         loadData()
+        refreshChildFragment()
+    }
+
+    private fun refreshChildFragment() {
+        val bf: BaseFragment? = getTopFragment()
+        if (bf != null) {
+            bf.refreshFragment()
+        }
+    }
+
+    fun getTopFragment(): BaseFragment? {
+        val fragentList = childFragmentManager.fragments
+        var top: Fragment? = null
+        for (i in fragentList.indices.reversed()) {
+            top = fragentList[i]
+            if (top != null && top is BaseFragment) {
+                return top
+            }
+        }
+        return null
     }
 
     private fun loadData() {
-        todoAdapter.addItems(DummyDataEngine.getDummyTodos())
+        todoAdapter.replaceItems(DummyDataEngine.getDummyTodos())
     }
 
     private fun initView() {

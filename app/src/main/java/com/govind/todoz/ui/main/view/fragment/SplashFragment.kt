@@ -1,8 +1,7 @@
-package com.govind.todoz.fragment
+package com.govind.todoz.ui.main.view.fragment
 
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import com.govind.todoz.R
 import com.govind.todoz.databinding.FragmentSplashBinding
 

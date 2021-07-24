@@ -1,23 +1,31 @@
 package com.govind.todoz.utils
 
-import com.govind.todoz.entities.Todo
+import com.govind.todoz.data.modal.Todo
 
-class DummyDataEngine {
+open class DummyDataEngine {
 
     companion object Factory {
+        private var todoList: MutableList<Todo> = ArrayList()
+
         fun getDummyTodos(): MutableList<Todo> {
-            var todos: MutableList<Todo> = ArrayList()
-            todos.add(Todo(1, "Grocory", "Handwash, Facewash", "02-07-2021", false))
-            todos.add(
-                Todo(
-                    2,
-                    "Stock Watchlist",
-                    "Infosys, Wipro, CDSL, Lauras lab",
-                    "02-07-2021",
-                    false
-                )
-            )
-            return todos
+            return todoList
         }
+
+        fun addTodo(todo: Todo) {
+            todoList.add(todo)
+        }
+    }
+
+    open fun addDummyItems() {
+        todoList.add(Todo(1, "Grocory", "Handwash, Facewash", "02-07-2021", false))
+        todoList.add(
+            Todo(
+                2,
+                "Stock Watchlist",
+                "Infosys, Wipro, CDSL, Lauras lab",
+                "02-07-2021",
+                false
+            )
+        )
     }
 }

@@ -1,4 +1,4 @@
-package com.govind.todoz.fragment
+package com.govind.todoz.ui.main.view.fragment
 
 import android.content.Context
 import android.graphics.Bitmap
@@ -65,7 +65,11 @@ abstract class BaseFragment : Fragment() {
 
     @get:LayoutRes
     protected abstract val layout: Int
-    fun refreshFragment() {}
+
+    open fun refreshFragment() {
+
+    }
+
     val title: String
         get() = ""
 

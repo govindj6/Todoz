@@ -6,7 +6,6 @@ class Todoz : Application() {
 
     override fun onCreate() {
         super.onCreate()
-
     }
 
 }

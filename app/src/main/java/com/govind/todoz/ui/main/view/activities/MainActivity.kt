@@ -1,11 +1,11 @@
-package com.govind.todoz.activities
+package com.govind.todoz.ui.main.view.activities
 
 import android.os.Bundle
 import com.govind.todoz.R
-import com.govind.todoz.fragment.AddTodoFragment
-import com.govind.todoz.fragment.Callback
-import com.govind.todoz.fragment.HomeFragment
-import com.govind.todoz.fragment.SplashFragment
+import com.govind.todoz.ui.main.view.fragment.AddTodoFragment
+import com.govind.todoz.ui.main.view.fragment.Callback
+import com.govind.todoz.ui.main.view.fragment.HomeFragment
+import com.govind.todoz.ui.main.view.fragment.SplashFragment
 
 class MainActivity : BaseActivity(), Callback {
     override fun onCreate(savedInstanceState: Bundle?) {

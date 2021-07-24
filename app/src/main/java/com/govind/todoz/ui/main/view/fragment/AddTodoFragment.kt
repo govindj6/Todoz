@@ -1,9 +1,11 @@
-package com.govind.todoz.fragment
+package com.govind.todoz.ui.main.view.fragment
 
 import android.os.Bundle
 import android.view.View
 import com.govind.todoz.R
+import com.govind.todoz.data.modal.Todo
 import com.govind.todoz.databinding.FragmentAddTodoBinding
+import com.govind.todoz.utils.DummyDataEngine
 
 class AddTodoFragment : BaseFragment() {
 
@@ -21,5 +23,22 @@ class AddTodoFragment : BaseFragment() {
         binding.imgBack.setOnClickListener {
             callback?.onNavigateBackRequested()
         }
+
+        binding.btnSave.setOnClickListener {
+            handleSaveButton()
+        }
+    }
+
+    private fun handleSaveButton() {
+        val todo = Todo(
+            3,
+            binding.edtTitle.text.toString(),
+            binding.edtDesc.text.toString(),
+            "15-07-2021",
+            false
+        )
+        DummyDataEngine.addTodo(todo)
+        callback?.onNavigateBackRequested()
+        showToast("Saved")
     }
 }

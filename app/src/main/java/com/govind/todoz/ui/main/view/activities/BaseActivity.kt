@@ -1,4 +1,4 @@
-package com.govind.todoz.activities
+package com.govind.todoz.ui.main.view.activities
 
 import android.content.Intent
 import android.os.Build
@@ -13,8 +13,9 @@ import androidx.core.view.ViewCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.govind.todoz.R
+import com.govind.todoz.ui.main.view.fragment.BaseFragment
 
-abstract class BaseActivity : AppCompatActivity(){
+abstract class BaseActivity : AppCompatActivity(), FragmentManager.OnBackStackChangedListener {
 
     protected fun addActivity(cls: Class<*>?, data: Bundle?) {
         val intent = Intent(this, cls)
@@ -38,6 +39,31 @@ abstract class BaseActivity : AppCompatActivity(){
 
     override fun addContentView(view: View, params: ViewGroup.LayoutParams) {
         super.addContentView(view, params)
+    }
+
+    override fun onBackStackChanged() {
+        try {
+            val fragment: Fragment? = getTopFragment()
+            (fragment as BaseFragment).refreshFragment()
+            //replaceMenuItems(((BaseFragment) fragment).getMenuItems());
+        } catch (e: java.lang.Exception) {
+            e.printStackTrace()
+        }
+        hideKeyboard()
+    }
+
+    open fun getTopFragment(): Fragment? {
+        val fragentList = supportFragmentManager.fragments
+        var top: Fragment? = null
+        for (i in fragentList.indices.reversed()) {
+            top = fragentList[i]
+            if (top != null) {
+                if (top is BaseFragment) {
+                    return top
+                }
+            }
+        }
+        return top
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -115,6 +141,7 @@ abstract class BaseActivity : AppCompatActivity(){
     protected fun showToast(text: String?) {
         Toast.makeText(this, text, Toast.LENGTH_SHORT).show()
     }
+
 
     /*public void refreshMenuItems() {
         if (this.toolbar != null) {
