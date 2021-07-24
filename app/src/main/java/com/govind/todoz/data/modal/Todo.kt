@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 
 @Entity
 data class Todo(
-    @PrimaryKey val id: Int,
+    @PrimaryKey(autoGenerate = true) val id: Int = 0,
     @ColumnInfo(name = "title") val title: String,
     @ColumnInfo(name = "desc") val desc: String,
     @ColumnInfo(name = "date") val date: String,
