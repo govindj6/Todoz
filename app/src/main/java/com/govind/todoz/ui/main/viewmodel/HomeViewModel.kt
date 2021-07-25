@@ -25,6 +25,26 @@ class HomeViewModel(private val todoRepository: TodoRepository) : ViewModel() {
         }
     }
 
+    fun deleteAllTodos() {
+        viewModelScope.launch {
+            try {
+                todoRepository.deleteAll()
+            } catch (exception: Exception) {
+                exception.printStackTrace()
+            }
+        }
+    }
+
+    fun delete(todo: Todo) {
+        viewModelScope.launch {
+            try {
+                todoRepository.delete(todo)
+            } catch (exception: Exception) {
+                exception.printStackTrace()
+            }
+        }
+    }
+
     fun getAllTodos(): LiveData<List<Todo>> {
         return todos
     }

@@ -2,6 +2,7 @@ package com.govind.todoz.ui.main.view.activities
 
 import android.os.Bundle
 import com.govind.todoz.R
+import com.govind.todoz.data.repository.TodoRepository
 import com.govind.todoz.ui.main.view.fragment.AddTodoFragment
 import com.govind.todoz.ui.main.view.fragment.Callback
 import com.govind.todoz.ui.main.view.fragment.HomeFragment
@@ -18,12 +19,12 @@ class MainActivity : BaseActivity(), Callback {
         replaceFragment(SplashFragment())
     }
 
-    override fun showHomeScreen() {
-        addFragment(HomeFragment());
+    override fun showHomeScreen(todoRepository: TodoRepository) {
+        addFragment(HomeFragment(todoRepository));
     }
 
-    override fun onAddTodoRequested() {
-        addFragment(AddTodoFragment())
+    override fun onAddTodoRequested(todoRepository: TodoRepository) {
+        addFragment(AddTodoFragment(todoRepository))
     }
 
     override fun onNavigateBackRequested() {

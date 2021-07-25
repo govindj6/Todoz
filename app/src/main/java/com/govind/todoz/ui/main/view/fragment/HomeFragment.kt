@@ -13,7 +13,6 @@ import com.govind.todoz.databinding.FragmentHomeBinding
 import com.govind.todoz.ui.base.ViewModelFactory
 import com.govind.todoz.ui.main.adapter.TodoAdapter
 import com.govind.todoz.ui.main.viewmodel.HomeViewModel
-import com.govind.todoz.utils.DummyDataEngine
 
 class HomeFragment(private val todoRepository: TodoRepository) : BaseFragment(),
     DateItemClickListener, TodoAdapter.TodoListener {
@@ -33,14 +32,14 @@ class HomeFragment(private val todoRepository: TodoRepository) : BaseFragment(),
         super.onViewCreated(view, savedInstanceState)
         binding.calendar.initialize(this)
         initView()
-        setUpObserver()
         setupViewModel()
+        setUpObserver()
     }
 
     private fun setUpObserver() {
         viewModel.getAllTodos().observe(viewLifecycleOwner, Observer {
             if (it.isNotEmpty()) {
-                todoAdapter.addItems(it)
+                todoAdapter.replaceItems(it)
             } else {
                 showToast("Todo not found")
             }
@@ -54,9 +53,6 @@ class HomeFragment(private val todoRepository: TodoRepository) : BaseFragment(),
 
     override fun refreshFragment() {
         super.refreshFragment()
-        val dummy = DummyDataEngine()
-        dummy.addDummyItems()
-        loadData()
         refreshChildFragment()
     }
 
@@ -77,18 +73,16 @@ class HomeFragment(private val todoRepository: TodoRepository) : BaseFragment(),
         return null
     }
 
-    private fun loadData() {
-        todoAdapter.replaceItems(DummyDataEngine.getDummyTodos())
-    }
-
     private fun initView() {
         todoAdapter = TodoAdapter(ArrayList(), this)
         binding.evTodo.adapter = todoAdapter;
-        binding.btnAddTodo.setOnClickListener { callback?.onAddTodoRequested() }
+        binding.btnAddTodo.setOnClickListener { callback?.onAddTodoRequested(todoRepository) }
     }
 
     override fun onDateClick(date: String) {
         showToast(date)
+        viewModel.delete(todoAdapter.todoList[0])
+        showToast("Deleted")
     }
 
     override fun onTodoSelected(selectedTodo: Todo?) {
