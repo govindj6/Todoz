@@ -16,11 +16,11 @@ class MainActivity : BaseActivity(), Callback {
     }
 
     private fun showSplashScreen() {
-        replaceFragment(SplashFragment())
+        addFragment(SplashFragment())
     }
 
     override fun showHomeScreen(todoRepository: TodoRepository) {
-        addFragment(HomeFragment(todoRepository));
+        replaceFragment(HomeFragment(todoRepository));
     }
 
     override fun onAddTodoRequested(todoRepository: TodoRepository) {
