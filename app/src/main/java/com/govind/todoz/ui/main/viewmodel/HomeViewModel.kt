@@ -5,11 +5,13 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.govind.todoz.data.modal.Todo
 import com.govind.todoz.data.repository.TodoRepository
+import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 
 class HomeViewModel(private val todoRepository: TodoRepository) : ViewModel() {
 
     private lateinit var todos: LiveData<List<Todo>>
+    private lateinit var filterTodoList: LiveData<List<Todo>>
 
     init {
         getTodoList()
@@ -23,6 +25,17 @@ class HomeViewModel(private val todoRepository: TodoRepository) : ViewModel() {
                 exception.printStackTrace()
             }
         }
+    }
+
+    fun getTodosByDate(date: String): LiveData<List<Todo>>? {
+        viewModelScope.async {
+            try {
+                filterTodoList = todoRepository.getTodosByDate(date)
+            } catch (exception: Exception) {
+                exception.printStackTrace()
+            }
+        }
+        return filterTodoList
     }
 
     fun deleteAllTodos() {

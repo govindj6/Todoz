@@ -9,6 +9,9 @@ class TodoRepository(private val appDatabase: AppDatabase) : DBHelper {
 
     override suspend fun getAll(): LiveData<List<Todo>> = appDatabase.todoDao().getAll()
 
+    override suspend fun getTodosByDate(date: String): LiveData<List<Todo>> =
+        appDatabase.todoDao().getTodosByDate(date)
+
     override suspend fun save(todo: Todo) = appDatabase.todoDao().save(todo)
 
     override suspend fun saveAll(todos: List<Todo>) = appDatabase.todoDao().saveAll(todos)

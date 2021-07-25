@@ -1,6 +1,8 @@
 package com.govind.todoz.ui.main.view.fragment
 
+import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import com.govind.todoz.R
@@ -9,9 +11,12 @@ import com.govind.todoz.data.repository.TodoRepository
 import com.govind.todoz.databinding.FragmentAddTodoBinding
 import com.govind.todoz.ui.base.ViewModelFactory
 import com.govind.todoz.ui.main.viewmodel.AddTodoViewModel
+import java.text.SimpleDateFormat
+import java.util.*
 
 class AddTodoFragment(private val todoRepository: TodoRepository) : BaseFragment() {
 
+    private val DATE_FORMAT: String = "dd-MM-yyyy"
     private lateinit var binding: FragmentAddTodoBinding
     private lateinit var viewModel: AddTodoViewModel
 
@@ -43,14 +48,18 @@ class AddTodoFragment(private val todoRepository: TodoRepository) : BaseFragment
             ).get(AddTodoViewModel::class.java)
     }
 
+    @SuppressLint("SimpleDateFormat")
     private fun handleSaveButton() {
+        val simpleDateFormat = SimpleDateFormat(DATE_FORMAT)
+        val currentDate: String = simpleDateFormat.format(Date())
         val todo = Todo(
             binding.edtTitle.text.toString(),
             binding.edtDesc.text.toString(),
-            "15-07-2021",
+            currentDate,
             false
         )
         viewModel.saveTodo(todo)
+        Log.d("Saved Entry", todo.toString())
         callback?.onNavigateBackRequested()
         showToast("Saved")
     }

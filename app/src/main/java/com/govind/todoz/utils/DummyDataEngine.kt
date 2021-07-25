@@ -16,7 +16,7 @@ open class DummyDataEngine {
         }
     }
 
-    open fun addDummyItems() {
+    /*open fun addDummyItems() {
         todoList.add(Todo(1, "Grocory", "Handwash, Facewash", "02-07-2021", false))
         todoList.add(
             Todo(
@@ -27,5 +27,5 @@ open class DummyDataEngine {
                 false
             )
         )
-    }
+    }*/
 }

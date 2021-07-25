@@ -80,9 +80,10 @@ class HomeFragment(private val todoRepository: TodoRepository) : BaseFragment(),
     }
 
     override fun onDateClick(date: String) {
-        showToast(date)
-        viewModel.delete(todoAdapter.todoList[0])
-        showToast("Deleted")
+        println(date)
+        viewModel.getTodosByDate(date)?.observe(viewLifecycleOwner, Observer {
+            todoAdapter.replaceItems(it)
+        })
     }
 
     override fun onTodoSelected(selectedTodo: Todo?) {

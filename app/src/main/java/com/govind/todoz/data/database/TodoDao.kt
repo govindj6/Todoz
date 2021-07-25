@@ -10,6 +10,9 @@ interface TodoDao {
     @Query("SELECT * FROM todo")
     fun getAll(): LiveData<List<Todo>>
 
+    @Query("SELECT * FROM todo WHERE date = :date")
+    fun getTodosByDate(date: String): LiveData<List<Todo>>
+
     @Insert
     suspend fun saveAll(todos: List<Todo>)
 

@@ -52,6 +52,7 @@ class TodoAdapter(var todoList: MutableList<Todo>, var listener: TodoListener) :
     inner class ViewHolder(var rootView: View) : RecyclerView.ViewHolder(rootView) {
         private val binding: ItemTodoBinding = ItemTodoBinding.bind(itemView)
         fun bind(todo: Todo?) {
+            println(todo.toString())
             binding.txtTitle.text = todo?.title
             rootView.setOnClickListener {
                 listener.onTodoSelected(todo)
