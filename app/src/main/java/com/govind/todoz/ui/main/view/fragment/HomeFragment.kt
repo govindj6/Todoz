@@ -80,13 +80,13 @@ class HomeFragment(private val todoRepository: TodoRepository) : BaseFragment(),
     }
 
     override fun onDateClick(date: String) {
-        println(date)
         viewModel.getTodosByDate(date)?.observe(viewLifecycleOwner, Observer {
             todoAdapter.replaceItems(it)
         })
     }
 
     override fun onTodoSelected(selectedTodo: Todo?) {
-        showToast(selectedTodo?.title)
+        TodoDetailDialog.newInstance(selectedTodo, false)
+            .show(childFragmentManager, TodoDetailDialog.TAG)
     }
 }
