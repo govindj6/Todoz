@@ -3,16 +3,23 @@ package com.govind.todoz.ui.main.view.fragment
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import com.example.horizontalcalendar.DateItemClickListener
 import com.govind.todoz.R
 import com.govind.todoz.data.modal.Todo
+import com.govind.todoz.data.repository.TodoRepository
 import com.govind.todoz.databinding.FragmentHomeBinding
+import com.govind.todoz.ui.base.ViewModelFactory
 import com.govind.todoz.ui.main.adapter.TodoAdapter
+import com.govind.todoz.ui.main.viewmodel.HomeViewModel
 import com.govind.todoz.utils.DummyDataEngine
 
-class HomeFragment : BaseFragment(), DateItemClickListener, TodoAdapter.TodoListener {
+class HomeFragment(private val todoRepository: TodoRepository) : BaseFragment(),
+    DateItemClickListener, TodoAdapter.TodoListener {
 
     private lateinit var binding: FragmentHomeBinding
+    private lateinit var viewModel: HomeViewModel
     private lateinit var todoAdapter: TodoAdapter
 
     override val layout: Int
@@ -26,25 +33,39 @@ class HomeFragment : BaseFragment(), DateItemClickListener, TodoAdapter.TodoList
         super.onViewCreated(view, savedInstanceState)
         binding.calendar.initialize(this)
         initView()
+        setUpObserver()
+        setupViewModel()
+    }
+
+    private fun setUpObserver() {
+        viewModel.getAllTodos().observe(viewLifecycleOwner, Observer {
+            if (it.isNotEmpty()) {
+                todoAdapter.addItems(it)
+            } else {
+                showToast("Todo not found")
+            }
+        })
+    }
+
+    private fun setupViewModel() {
+        viewModel =
+            ViewModelProvider(this, ViewModelFactory(todoRepository)).get(HomeViewModel::class.java)
     }
 
     override fun refreshFragment() {
         super.refreshFragment()
         val dummy = DummyDataEngine()
         dummy.addDummyItems()
-        showToast("called")
         loadData()
         refreshChildFragment()
     }
 
     private fun refreshChildFragment() {
         val bf: BaseFragment? = getTopFragment()
-        if (bf != null) {
-            bf.refreshFragment()
-        }
+        bf?.refreshFragment()
     }
 
-    fun getTopFragment(): BaseFragment? {
+    private fun getTopFragment(): BaseFragment? {
         val fragentList = childFragmentManager.fragments
         var top: Fragment? = null
         for (i in fragentList.indices.reversed()) {

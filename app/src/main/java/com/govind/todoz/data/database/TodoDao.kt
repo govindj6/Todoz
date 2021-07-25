@@ -8,7 +8,7 @@ import com.govind.todoz.data.modal.Todo
 interface TodoDao {
 
     @Query("SELECT * FROM todo")
-    suspend fun getAll(): LiveData<List<Todo>>
+    fun getAll(): LiveData<List<Todo>>
 
     @Insert
     suspend fun saveAll(todos: List<Todo>)
