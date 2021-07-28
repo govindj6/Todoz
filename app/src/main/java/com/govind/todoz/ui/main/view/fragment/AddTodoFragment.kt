@@ -4,21 +4,18 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import androidx.lifecycle.ViewModelProvider
 import com.govind.todoz.R
 import com.govind.todoz.data.modal.Todo
-import com.govind.todoz.data.repository.TodoRepository
 import com.govind.todoz.databinding.FragmentAddTodoBinding
-import com.govind.todoz.ui.base.ViewModelFactory
 import com.govind.todoz.ui.main.viewmodel.AddTodoViewModel
 import java.text.SimpleDateFormat
 import java.util.*
 
-class AddTodoFragment(private val todoRepository: TodoRepository) : BaseFragment() {
+class AddTodoFragment : BaseFragment() {
 
     private val DATE_FORMAT: String = "dd-MM-yyyy"
     private lateinit var binding: FragmentAddTodoBinding
-    private lateinit var viewModel: AddTodoViewModel
+    lateinit var viewModel: AddTodoViewModel
 
     override val layout: Int
         get() = R.layout.fragment_add_todo
@@ -37,16 +34,16 @@ class AddTodoFragment(private val todoRepository: TodoRepository) : BaseFragment
             handleSaveButton()
         }
 
-        setupObserver()
+        //setupObserver()
     }
 
-    private fun setupObserver() {
+    /*private fun setupObserver() {
         viewModel =
             ViewModelProvider(
                 this,
                 ViewModelFactory(todoRepository)
             ).get(AddTodoViewModel::class.java)
-    }
+    }*/
 
     @SuppressLint("SimpleDateFormat")
     private fun handleSaveButton() {

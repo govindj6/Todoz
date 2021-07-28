@@ -4,8 +4,9 @@ import androidx.lifecycle.LiveData
 import com.govind.todoz.data.database.AppDatabase
 import com.govind.todoz.data.database.DBHelper
 import com.govind.todoz.data.modal.Todo
+import javax.inject.Inject
 
-class TodoRepository(private val appDatabase: AppDatabase) : DBHelper {
+class TodoRepository @Inject constructor(private val appDatabase: AppDatabase) : DBHelper {
 
     override suspend fun getAll(): LiveData<List<Todo>> = appDatabase.todoDao().getAll()
 

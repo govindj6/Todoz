@@ -4,21 +4,20 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import com.example.horizontalcalendar.DateItemClickListener
 import com.govind.todoz.R
 import com.govind.todoz.data.modal.Todo
-import com.govind.todoz.data.repository.TodoRepository
 import com.govind.todoz.databinding.FragmentHomeBinding
-import com.govind.todoz.ui.base.ViewModelFactory
 import com.govind.todoz.ui.main.adapter.TodoAdapter
 import com.govind.todoz.ui.main.viewmodel.HomeViewModel
 
-class HomeFragment(private val todoRepository: TodoRepository) : BaseFragment(),
+class HomeFragment() : BaseFragment(),
     DateItemClickListener, TodoAdapter.TodoListener {
 
     private lateinit var binding: FragmentHomeBinding
-    private lateinit var viewModel: HomeViewModel
+
+    lateinit var viewModel: HomeViewModel
+
     private lateinit var todoAdapter: TodoAdapter
 
     override val layout: Int
@@ -32,7 +31,7 @@ class HomeFragment(private val todoRepository: TodoRepository) : BaseFragment(),
         super.onViewCreated(view, savedInstanceState)
         binding.calendar.initialize(this)
         initView()
-        setupViewModel()
+        //setupViewModel()
         setUpObserver()
     }
 
@@ -46,10 +45,10 @@ class HomeFragment(private val todoRepository: TodoRepository) : BaseFragment(),
         })
     }
 
-    private fun setupViewModel() {
+    /*private fun setupViewModel() {
         viewModel =
             ViewModelProvider(this, ViewModelFactory(todoRepository)).get(HomeViewModel::class.java)
-    }
+    }*/
 
     override fun refreshFragment() {
         super.refreshFragment()
@@ -76,7 +75,7 @@ class HomeFragment(private val todoRepository: TodoRepository) : BaseFragment(),
     private fun initView() {
         todoAdapter = TodoAdapter(ArrayList(), this)
         binding.evTodo.adapter = todoAdapter;
-        binding.btnAddTodo.setOnClickListener { callback?.onAddTodoRequested(todoRepository) }
+        binding.btnAddTodo.setOnClickListener { callback?.onAddTodoRequested() }
     }
 
     override fun onDateClick(date: String) {
