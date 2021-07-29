@@ -14,7 +14,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.govind.todoz.R
 import com.govind.todoz.ui.main.view.fragment.BaseFragment
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 abstract class BaseActivity : AppCompatActivity(), FragmentManager.OnBackStackChangedListener {
 
     protected fun addActivity(cls: Class<*>?, data: Bundle?) {

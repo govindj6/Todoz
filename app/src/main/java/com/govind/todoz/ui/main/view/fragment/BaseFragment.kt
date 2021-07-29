@@ -11,8 +11,10 @@ import android.widget.Toast
 import androidx.annotation.LayoutRes
 import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
+import dagger.hilt.android.AndroidEntryPoint
 import java.io.ByteArrayOutputStream
 
+@AndroidEntryPoint
 abstract class BaseFragment : Fragment() {
 
     var callback: Callback? = null

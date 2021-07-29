@@ -6,9 +6,7 @@ import com.govind.todoz.ui.main.view.fragment.AddTodoFragment
 import com.govind.todoz.ui.main.view.fragment.Callback
 import com.govind.todoz.ui.main.view.fragment.HomeFragment
 import com.govind.todoz.ui.main.view.fragment.SplashFragment
-import dagger.hilt.android.AndroidEntryPoint
 
-@AndroidEntryPoint
 class MainActivity : BaseActivity(), Callback {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

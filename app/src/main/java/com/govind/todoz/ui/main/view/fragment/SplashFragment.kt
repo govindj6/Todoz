@@ -3,8 +3,6 @@ package com.govind.todoz.ui.main.view.fragment
 import android.os.Bundle
 import android.view.View
 import com.govind.todoz.R
-import com.govind.todoz.data.database.AppDatabase
-import com.govind.todoz.data.repository.TodoRepository
 import com.govind.todoz.databinding.FragmentSplashBinding
 
 class SplashFragment : BaseFragment() {
@@ -28,13 +26,7 @@ class SplashFragment : BaseFragment() {
             super.run()
             try {
                 sleep(3000)
-                callback?.showHomeScreen(
-                    todoRepository = TodoRepository(
-                        AppDatabase.DatabaseBuilder.getInstance(
-                            requireContext()
-                        )
-                    )
-                )
+                callback?.showHomeScreen()
                 println("Call Dashboard fragment")
             } catch (e: Exception) {
                 e.printStackTrace()

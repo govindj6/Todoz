@@ -3,6 +3,7 @@ package com.govind.todoz.ui.main.view.fragment
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.example.horizontalcalendar.DateItemClickListener
 import com.govind.todoz.R
@@ -15,9 +16,7 @@ class HomeFragment() : BaseFragment(),
     DateItemClickListener, TodoAdapter.TodoListener {
 
     private lateinit var binding: FragmentHomeBinding
-
-    lateinit var viewModel: HomeViewModel
-
+    val viewModel: HomeViewModel by viewModels()
     private lateinit var todoAdapter: TodoAdapter
 
     override val layout: Int
@@ -31,7 +30,6 @@ class HomeFragment() : BaseFragment(),
         super.onViewCreated(view, savedInstanceState)
         binding.calendar.initialize(this)
         initView()
-        //setupViewModel()
         setUpObserver()
     }
 
@@ -44,11 +42,6 @@ class HomeFragment() : BaseFragment(),
             }
         })
     }
-
-    /*private fun setupViewModel() {
-        viewModel =
-            ViewModelProvider(this, ViewModelFactory(todoRepository)).get(HomeViewModel::class.java)
-    }*/
 
     override fun refreshFragment() {
         super.refreshFragment()
