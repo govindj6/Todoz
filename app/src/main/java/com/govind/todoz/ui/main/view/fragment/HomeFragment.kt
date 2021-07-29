@@ -29,8 +29,14 @@ class HomeFragment() : BaseFragment(),
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.calendar.initialize(this)
+        binding.txtDateFilter.setOnClickListener { clearDateFilter() }
         initView()
         setUpObserver()
+    }
+
+    private fun clearDateFilter() {
+        setUpObserver()
+        binding.txtDateFilter.visibility = View.GONE
     }
 
     private fun setUpObserver() {
@@ -75,6 +81,7 @@ class HomeFragment() : BaseFragment(),
         viewModel.getTodosByDate(date)?.observe(viewLifecycleOwner, Observer {
             todoAdapter.replaceItems(it)
         })
+        binding.txtDateFilter.visibility = View.VISIBLE
     }
 
     override fun onTodoSelected(selectedTodo: Todo?) {
