@@ -42,7 +42,7 @@ class HomeFragment() : BaseFragment(),
     private fun setUpObserver() {
         viewModel.getAllTodos().observe(viewLifecycleOwner, Observer {
             if (it.isNotEmpty()) {
-                todoAdapter.replaceItems(it)
+                todoAdapter.replaceItems(it.asReversed())
             } else {
                 showToast("Todo not found")
             }
@@ -79,7 +79,7 @@ class HomeFragment() : BaseFragment(),
 
     override fun onDateClick(date: String) {
         viewModel.getTodosByDate(date)?.observe(viewLifecycleOwner, Observer {
-            todoAdapter.replaceItems(it)
+            todoAdapter.replaceItems(it.asReversed())
         })
         binding.txtDateFilter.visibility = View.VISIBLE
     }
