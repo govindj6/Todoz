@@ -8,7 +8,7 @@ import com.govind.todoz.R
 import com.govind.todoz.data.modal.Todo
 import com.govind.todoz.databinding.ItemTodoBinding
 
-class TodoAdapter(var todoList: MutableList<Todo>, var listener: TodoListener) :
+class TodoAdapter(var todoList: MutableList<Todo>, var listener: TodoListener?) :
     RecyclerView.Adapter<TodoAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(
@@ -36,6 +36,7 @@ class TodoAdapter(var todoList: MutableList<Todo>, var listener: TodoListener) :
         todoList.clear()
         todoList.addAll(newItems!!)
         notifyDataSetChanged()
+        listener?.isTodoListEmpty(todoList.isEmpty())
     }
 
     fun clearItems() {
@@ -55,12 +56,13 @@ class TodoAdapter(var todoList: MutableList<Todo>, var listener: TodoListener) :
             println(todo.toString())
             binding.txtTitle.text = todo?.title
             rootView.setOnClickListener {
-                listener.onTodoSelected(todo)
+                listener?.onTodoSelected(todo)
             }
         }
     }
 
     interface TodoListener {
         fun onTodoSelected(selectedTodo: Todo?)
+        fun isTodoListEmpty(isTodoListEmpty: Boolean)
     }
 }

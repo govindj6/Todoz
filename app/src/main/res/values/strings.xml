@@ -2,4 +2,5 @@
     <string name="app_name">Todoz</string>
     <string name="clear_date_filter">Clear date filter</string>
     <string name="good_morning">Good Morning</string>
+    <string name="no_todo_available_for_this_date">Todos not available</string>
 </resources>

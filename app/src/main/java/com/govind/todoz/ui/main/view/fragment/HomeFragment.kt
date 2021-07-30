@@ -44,11 +44,7 @@ class HomeFragment() : BaseFragment(),
 
     private fun setUpObserver() {
         viewModel.getAllTodos().observe(viewLifecycleOwner, Observer {
-            if (it.isNotEmpty()) {
-                todoAdapter.replaceItems(it.asReversed())
-            } else {
-                showToast("Todo not found")
-            }
+            todoAdapter.replaceItems(it?.asReversed())
         })
     }
 
@@ -82,7 +78,7 @@ class HomeFragment() : BaseFragment(),
 
     override fun onDateClick(date: String) {
         viewModel.getTodosByDate(date)?.observe(viewLifecycleOwner, Observer {
-            todoAdapter.replaceItems(it.asReversed())
+            todoAdapter.replaceItems(it?.asReversed())
         })
         binding.txtDateFilter.visibility = View.VISIBLE
     }
@@ -90,6 +86,10 @@ class HomeFragment() : BaseFragment(),
     override fun onTodoSelected(selectedTodo: Todo?) {
         TodoDetailDialog.newInstance(selectedTodo, false)
             .show(childFragmentManager, TodoDetailDialog.TAG)
+    }
+
+    override fun isTodoListEmpty(isTodoListEmpty: Boolean) {
+        updateEmptyView(isTodoListEmpty)
     }
 
     fun getGreetingMessage(): String {
@@ -100,6 +100,16 @@ class HomeFragment() : BaseFragment(),
             in 16..20 -> "Good Evening"
             in 21..23 -> "Good Night"
             else -> "Hello"
+        }
+    }
+
+    private fun updateEmptyView(isEmpty: Boolean) {
+        if (isEmpty) {
+            binding.evTodo.visibility = View.GONE
+            binding.txtEmptyMsg.visibility = View.VISIBLE
+        } else {
+            binding.evTodo.visibility = View.VISIBLE
+            binding.txtEmptyMsg.visibility = View.GONE
         }
     }
 }
